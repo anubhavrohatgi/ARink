@@ -7,6 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    gridSizeval =8;
+
+
+    spinBox = new QSpinBox(this);
+    ui->mainToolBar->addWidget(spinBox);
 
     fileOpenAct = ui->fileOpenAct;
     fileSaveAsAct = ui->saveAsAct;
@@ -21,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     kelvinAct = ui->kelvinAct;
     coolAct = ui->coolAct;
     originalAct = ui->originalAct;
+    vignetteAct = ui->vignetteAct;
+    mosaicAct = ui->mosaicAct;
 
 
     imageLabel = new QLabel;
@@ -47,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::setupSS()
 {
+    spinBox->setValue(gridSizeval);
     connect(fileOpenAct,SIGNAL(triggered()),this,SLOT(openFile()));
     connect(fileSaveAct,SIGNAL(triggered()),this,SLOT(saveFile()));
     connect(fileSaveAsAct,SIGNAL(triggered()),this,SLOT(saveAsFile()));
@@ -60,6 +68,11 @@ void MainWindow::setupSS()
     connect(kelvinAct, SIGNAL(triggered()), this, SLOT(kelvinEffect()));
     connect(coolAct, SIGNAL(triggered()), this, SLOT(coolEffect()));
     connect(originalAct, SIGNAL(triggered()), this, SLOT(resetImageOriginal()));
+    connect(vignetteAct, SIGNAL(triggered()), this, SLOT(on_vignetteAct_triggered()));
+    connect(mosaicAct, SIGNAL(triggered()), this, SLOT(mosaicEffect()));
+
+
+//    connect(this, SIGNAL(Pos()), this, SLOT(on_vignetteAct_triggered()));
 }
 
 MainWindow::~MainWindow()
@@ -281,6 +294,28 @@ void MainWindow::coolEffect()
 }
 
 
+
+
+void MainWindow::mosaicEffect()
+{
+    if(img.empty())
+        return;
+
+    if(img.channels() == 1){
+        qWarning()<<"No change as image is 1 channel";
+    } else {
+
+        MosaicFilter *workerThread = new MosaicFilter(this);
+        connect(workerThread, &MosaicFilter::resultReady, this, &MainWindow::setImageL);
+        connect(workerThread, &MosaicFilter::finished, workerThread, &QObject::deleteLater);
+        workerThread->setGridSize(this->spinBox->value());
+        qDebug()<<"Size value "<<this->spinBox->value();
+        workerThread->setInput( img);
+        workerThread->start();
+    }
+}
+
+
 void MainWindow::resetImageOriginal()
 {
     if(img.empty())
@@ -295,3 +330,30 @@ void MainWindow::resetImageOriginal()
 
 
 
+
+void MainWindow::on_vignetteAct_triggered()
+{
+    qDebug()<<"Act triggered";
+
+
+//    qDebug()<<"Pos"<<
+
+//    QWidget* wdslide = new QWidget(ui->mainToolBar);
+//    wdslide->setGeometry(50,100,50,100);
+
+//    wdslide->setVisible(true);
+
+
+
+
+//    QSlider* vslide = new QSlider(ui->mainToolBar);
+//    vslide->setMinimum(0);
+//    vslide->setMaximum(100);
+////    vslide->setGeometry(ui->mainToolBar->width()/2,30,30,200);
+////    qDebug()<<ui->mainToolBar->mouseGrabber()->x();
+////    vslide->setGeometry(ui->mainToolBar->mouseGrabber()->x());
+
+
+//    vslide->setVisible(true);
+
+}

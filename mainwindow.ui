@@ -105,6 +105,9 @@
    <addaction name="colorizeAct"/>
    <addaction name="kelvinAct"/>
    <addaction name="coolAct"/>
+   <addaction name="separator"/>
+   <addaction name="vignetteAct"/>
+   <addaction name="mosaicAct"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="fileOpenAct">
@@ -266,6 +269,33 @@
    </property>
    <property name="toolTip">
     <string>Reset to original</string>
+   </property>
+  </action>
+  <action name="vignetteAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/frontend/resources/pak3/007-vignette.png</normaloff>:/frontend/resources/pak3/007-vignette.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vignette</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="mosaicAct">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/frontend/resources/pak2/002-filter-1.png</normaloff>:/frontend/resources/pak2/002-filter-1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mosaic</string>
+   </property>
+   <property name="toolTip">
+    <string>Mosaicing</string>
    </property>
   </action>
  </widget>

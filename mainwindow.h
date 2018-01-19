@@ -12,6 +12,10 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSlider>
+#include <QWidget>
+#include <QPoint>
+#include <QSpinBox>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
@@ -46,9 +50,14 @@ private slots:
     void toColorize();
     void kelvinEffect();
     void coolEffect();
+    void mosaicEffect();
     void resetImageOriginal();
 
+//    void displayCoords(const QPoint& pos);
+
     void setImageL(const QImage& dst);
+
+    void on_vignetteAct_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -67,7 +76,12 @@ private:
     QAction* kelvinAct;
     QAction* coolAct;
     QAction* originalAct;
+    QAction* vignetteAct;
+    QAction* mosaicAct;
+    QSpinBox *spinBox;
 
+
+    int gridSizeval;
     cv::Mat img;
     cv::Mat colorImg;
     cv::Mat originalCopy;

@@ -10,6 +10,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/features2d.hpp>
 
 #include "interpolation.h"
 #include "ocvhelpers.h"
@@ -105,6 +106,39 @@ protected:
 };
 
 
+
+class MosaicFilter : public QThread
+{
+    Q_OBJECT
+public:
+    MosaicFilter(QObject *parent=0);
+    ~MosaicFilter();
+
+
+    void setInput(const cv::Mat& input);
+
+    void setGridSize(const int& sz);
+
+
+signals:
+
+    void resultReady(const QImage& dst);
+
+private:
+    cv::Mat mimg;
+    int gridSize;
+
+    void computeTriangleGrid(
+        std::vector<cv::KeyPoint>& grid,
+        cv::Rect frame,
+        int gridSize,
+        int pointOffset);
+
+protected:
+
+    void run() override;
+
+};
 
 
 

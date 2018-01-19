@@ -26,7 +26,8 @@ LIBS += -L/usr/local/lib \
         -lopencv_imgcodecs\
         -lopencv_objdetect\
         -lopencv_calib3d\
-        -lopencv_ximgproc
+        -lopencv_ximgproc\
+        -lopencv_features2d
 
 
 
